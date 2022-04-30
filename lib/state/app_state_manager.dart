@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'app_cache.dart';
 
-class FooderlichTab {
+class RosemarinTab {
   static const int savedRecipes = 0;
   static const int recipes = 1;
   static const int ml = 2;
@@ -14,7 +14,7 @@ class AppStateManager extends ChangeNotifier {
   bool _initialized = false;
   // bool _loggedIn = false;
   bool _onboardingComplete = false;
-  int _selectedTab = FooderlichTab.savedRecipes;
+  int _selectedTab = RosemarinTab.savedRecipes;
   final _appCache = AppCache();
 
   bool get isInitialized => _initialized;
@@ -53,7 +53,7 @@ class AppStateManager extends ChangeNotifier {
   }
 
   void goToRecipes() {
-    _selectedTab = FooderlichTab.recipes;
+    _selectedTab = RosemarinTab.recipes;
     notifyListeners();
   }
 

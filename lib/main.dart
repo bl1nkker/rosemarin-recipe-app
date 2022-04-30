@@ -6,6 +6,7 @@ import 'package:rosemarin_recipe_app/screens/ml_screen.dart';
 import 'package:rosemarin_recipe_app/screens/recipe_screen.dart';
 import 'package:rosemarin_recipe_app/screens/saved_recipes_screen.dart';
 import 'package:rosemarin_recipe_app/state/app_state_manager.dart';
+import 'package:rosemarin_recipe_app/state/recipes_manager.dart';
 
 void main() {
   runApp(const MyApp());
@@ -45,6 +46,7 @@ class Rosemarin extends StatefulWidget {
 
 class _RosemarinState extends State<Rosemarin> {
   final _appStateManager = AppStateManager();
+  final _recipeManager = RecipesManager();
   late AppRouter _appRouter;
 
   @override
@@ -62,10 +64,12 @@ class _RosemarinState extends State<Rosemarin> {
           ChangeNotifierProvider(
             create: (context) => _appStateManager,
           ),
+          ChangeNotifierProvider(
+            create: (context) => _recipeManager,
+          ),
         ],
         child: MaterialApp(
           home: Router(
-            backButtonDispatcher: RootBackButtonDispatcher(),
             // routerDelegate helps construct the stack of pages that represents
             //your app state.
             routerDelegate: _appRouter,

@@ -5,6 +5,7 @@ import 'package:rosemarin_recipe_app/screens/ml_screen.dart';
 import 'package:rosemarin_recipe_app/screens/recipe_screen.dart';
 import 'package:rosemarin_recipe_app/screens/saved_recipes_screen.dart';
 import 'package:rosemarin_recipe_app/state/app_state_manager.dart';
+import 'package:rosemarin_recipe_app/state/recipes_manager.dart';
 
 class Home extends StatefulWidget {
   static MaterialPage page(int currentTab) {
@@ -30,8 +31,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   static List<Widget> pages = <Widget>[
-    RecipeScreen(),
     SavedRecipesScreen(),
+    RecipeScreen(),
     const MLScreen()
   ];
 
