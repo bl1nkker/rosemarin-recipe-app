@@ -4,56 +4,23 @@ part 'recipe_model.g.dart';
 
 @JsonSerializable()
 class RecipeModel {
+  // title = models.CharField(max_length=255)
+  // image = models.CharField(max_length=255)
+  // ingredients = models.ManyToManyField(Ingredient)
   final int id;
-  final String name;
+  final String title;
+  final String image;
   final List<IngredientModel> ingredients;
-  late int calories;
-  late int proteins;
-  late int fats;
-  late int carbohydrates;
-  final String images;
 
   RecipeModel({
     required this.id,
-    required this.name,
+    required this.title,
+    required this.image,
     required this.ingredients,
-    required this.images,
   });
 
   factory RecipeModel.fromJson(Map<String, dynamic> json) =>
       _$RecipeModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$RecipeModelToJson(this);
-
-  int getCalories() {
-    calories = 0;
-    for (var ingredient in ingredients) {
-      calories += ingredient.product.calories * ingredient.quantity;
-    }
-    return calories;
-  }
-
-  int getProteins() {
-    proteins = 0;
-    for (var ingredient in ingredients) {
-      proteins += ingredient.product.proteins * ingredient.quantity;
-    }
-    return proteins;
-  }
-
-  int getFats() {
-    fats = 0;
-    for (var ingredient in ingredients) {
-      fats += ingredient.product.fats * ingredient.quantity;
-    }
-    return fats;
-  }
-
-  int getCarbohydrates() {
-    carbohydrates = 0;
-    for (var ingredient in ingredients) {
-      carbohydrates += ingredient.product.carbohydrates * ingredient.quantity;
-    }
-    return carbohydrates;
-  }
 }

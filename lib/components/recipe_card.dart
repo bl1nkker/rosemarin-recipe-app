@@ -4,7 +4,7 @@ import 'package:rosemarin_recipe_app/screens/recipe_details_screen.dart';
 
 class RecipeCard extends StatefulWidget {
   final RecipeModel recipe;
-  RecipeCard({Key? key, required this.recipe}) : super(key: key);
+  const RecipeCard({Key? key, required this.recipe}) : super(key: key);
 
   @override
   State<RecipeCard> createState() => _RecipeCardState();
@@ -27,8 +27,8 @@ class _RecipeCardState extends State<RecipeCard> {
         },
         child: Container(
           width: 200,
-          margin: EdgeInsets.only(left: 10.0),
-          decoration: BoxDecoration(
+          margin: const EdgeInsets.only(left: 10.0),
+          decoration: const BoxDecoration(
             boxShadow: [
               BoxShadow(
                 color: Colors.grey,
@@ -38,7 +38,7 @@ class _RecipeCardState extends State<RecipeCard> {
           ),
           child: Column(
             children: [
-              ClipRRect(
+              const ClipRRect(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(10.0),
                   topRight: Radius.circular(10.0),
@@ -64,21 +64,21 @@ class _RecipeCardState extends State<RecipeCard> {
             color: Colors.green,
             size: 12,
           ),
-          SizedBox(width: 5),
+          const SizedBox(width: 5),
           Text(
             text,
-            style: TextStyle(fontSize: 10, color: Colors.grey),
+            style: const TextStyle(fontSize: 10, color: Colors.grey),
           )
         ],
       );
     }
 
     return Container(
-      padding: EdgeInsets.all(
+      padding: const EdgeInsets.all(
         10.0,
       ),
       width: 200,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(5.0),
@@ -89,17 +89,17 @@ class _RecipeCardState extends State<RecipeCard> {
       ),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
-          widget.recipe.name,
-          style: TextStyle(
+          widget.recipe.title,
+          style: const TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 10),
-        buildRecipeInfo(
-            '${recipe.getCalories().toString()} calories', Icons.foggy),
-        SizedBox(height: 5),
-        buildRecipeInfo('25 min', Icons.timer),
+        const SizedBox(height: 10),
+        // buildRecipeInfo(
+        //     '${recipe.getCalories().toString()} calories', Icons.foggy),
+        // SizedBox(height: 5),
+        // buildRecipeInfo('25 min', Icons.timer),
       ]),
     );
   }

@@ -154,8 +154,12 @@ class Faker {
     final List<IngredientModel> ingrediens = [];
     for (int i = 0; i < ingredientsAmount; i++) {
       final ProductModel product = products[i];
-      final newIngredient =
-          IngredientModel(id: i, product: product, quantity: i * 100);
+      final newIngredient = IngredientModel(
+          id: i,
+          name: product.title,
+          quantity: i * 100,
+          image: '',
+          unit: 'tsp');
       ingrediens.add(newIngredient);
     }
 
@@ -169,9 +173,9 @@ class Faker {
       }
       final newRecipe = RecipeModel(
           id: i,
-          name: recipeNames[i],
+          title: recipeNames[i],
           ingredients: randomIngredients,
-          images: '');
+          image: '');
       recipes.add(newRecipe);
     }
 
@@ -184,7 +188,7 @@ class Faker {
       products.add(ProductModel(
         id: i,
         calories: Random().nextInt(100),
-        carbohydrates: Random().nextInt(100),
+        carbs: Random().nextInt(100),
         fats: Random().nextInt(100),
         proteins: Random().nextInt(100),
         title: productNames[i],

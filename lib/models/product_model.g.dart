@@ -10,9 +10,9 @@ ProductModel _$ProductModelFromJson(Map<String, dynamic> json) => ProductModel(
       id: json['id'] as int,
       title: json['title'] as String,
       proteins: json['proteins'] as int,
-      fats: json['fats'] as int,
-      carbohydrates: json['carbohydrates'] as int,
+      carbs: json['carbs'] as int,
       calories: json['calories'] as int,
+      fats: json['fats'] as int,
     );
 
 Map<String, dynamic> _$ProductModelToJson(ProductModel instance) =>
@@ -20,7 +20,7 @@ Map<String, dynamic> _$ProductModelToJson(ProductModel instance) =>
       'id': instance.id,
       'title': instance.title,
       'proteins': instance.proteins,
-      'fats': instance.fats,
-      'carbohydrates': instance.carbohydrates,
+      'carbs': instance.carbs,
       'calories': instance.calories,
+      'fats': instance.fats,
     };
