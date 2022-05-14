@@ -4,7 +4,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class RecipeDetailsScreen extends StatefulWidget {
   final RecipeModel recipe;
-  RecipeDetailsScreen({Key? key, required this.recipe}) : super(key: key);
+  const RecipeDetailsScreen({Key? key, required this.recipe}) : super(key: key);
 
   @override
   State<RecipeDetailsScreen> createState() => _RecipeDetailsScreenState();
@@ -40,9 +40,11 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                   color: Colors.greenAccent,
                   image: DecorationImage(
                       image: NetworkImage(
-                          'https://cdn.vox-cdn.com/thumbor/0QFv_gVJALYFrWPVytYTb1jPCr8=/0x0:3000x2000/1200x675/filters:focal(1260x760:1740x1240)/cdn.vox-cdn.com/uploads/chorus_image/image/70516799/jbareham_220214_ecl1085_anime_2022.0.jpg'),
+                        widget.recipe.image,
+                      ),
+
                       // alignment: Alignment(-.7, 0),
-                      fit: BoxFit.cover),
+                      fit: BoxFit.fitHeight),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -104,9 +106,9 @@ class DetailsPanelWidget extends StatelessWidget {
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(20)),
               gradient: LinearGradient(begin: Alignment.bottomRight, colors: [
-                Color.fromARGB(255, 255, 255, 255).withOpacity(1),
+                const Color.fromARGB(255, 255, 255, 255).withOpacity(1),
                 // Colors.black.withOpacity(.3),
-                Color.fromARGB(255, 255, 255, 255).withOpacity(.6),
+                const Color.fromARGB(255, 255, 255, 255).withOpacity(.6),
               ])),
           child: Column(
             children: [
@@ -129,7 +131,7 @@ class DetailsPanelWidget extends StatelessWidget {
                     Text(
                         'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
                         style: themeData.textTheme.bodyText2),
-                    SizedBox(
+                    const SizedBox(
                       height: 20.0,
                     ),
                     const SizedBox(

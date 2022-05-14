@@ -18,6 +18,7 @@ class RecipesManager extends ChangeNotifier {
     // TODO: Fetch recipes here
     _products = await recipeProvider.fetchAllProducts();
     _recipes = await recipeProvider.fetchAllRecipes();
+    notifyListeners();
     print('Retrieved ${_products.length} products');
     print('Retrieved ${_recipes.length} recipes');
   }

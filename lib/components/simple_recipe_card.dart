@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:rosemarin_recipe_app/models/recipe_model.dart';
 import 'package:rosemarin_recipe_app/screens/recipe_details_screen.dart';
 
-class RecipeCard extends StatefulWidget {
+class SimpleRecipeCard extends StatefulWidget {
   final RecipeModel recipe;
-  const RecipeCard({Key? key, required this.recipe}) : super(key: key);
+  const SimpleRecipeCard({Key? key, required this.recipe}) : super(key: key);
 
   @override
-  State<RecipeCard> createState() => _RecipeCardState();
+  State<SimpleRecipeCard> createState() => _SimpleRecipeCardState();
 }
 
-class _RecipeCardState extends State<RecipeCard> {
+class _SimpleRecipeCardState extends State<SimpleRecipeCard> {
   @override
   Widget build(BuildContext context) {
     return Hero(
@@ -26,7 +26,7 @@ class _RecipeCardState extends State<RecipeCard> {
           );
         },
         child: Container(
-          width: 200,
+          width: 120,
           margin: const EdgeInsets.only(left: 10.0),
           decoration: const BoxDecoration(
             boxShadow: [
@@ -71,34 +71,40 @@ class _RecipeCardState extends State<RecipeCard> {
       );
     }
 
-    return Container(
-      padding: const EdgeInsets.all(
-        10.0,
-      ),
-      width: 200,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(5.0),
-          topRight: Radius.circular(5.0),
-          bottomLeft: Radius.circular(10.0),
-          bottomRight: Radius.circular(10.0),
+    return Center(
+      child: Container(
+        padding: const EdgeInsets.all(
+          10.0,
         ),
-      ),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(
-          widget.recipe.title,
-          style: const TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
+        width: 200,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(5.0),
+            topRight: Radius.circular(5.0),
+            bottomLeft: Radius.circular(10.0),
+            bottomRight: Radius.circular(10.0),
           ),
         ),
-        const SizedBox(height: 10),
-        // buildRecipeInfo(
-        //     '${recipe.getCalories().toString()} calories', Icons.foggy),
-        // SizedBox(height: 5),
-        // buildRecipeInfo('25 min', Icons.timer),
-      ]),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(
+            widget.recipe.title,
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            'Only ${widget.recipe.ingredients_ids.length} ingredients!',
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+                fontSize: 8,
+                color: Colors.blueGrey,
+                fontWeight: FontWeight.w300),
+          ),
+        ]),
+      ),
     );
   }
 }

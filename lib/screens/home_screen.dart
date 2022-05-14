@@ -32,7 +32,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   static List<Widget> pages = <Widget>[
     SavedRecipesScreen(),
-    RecipeScreen(),
+    const RecipeScreen(),
     const MLScreen()
   ];
 
@@ -45,10 +45,13 @@ class _HomeState extends State<Home> {
         child,
       ) {
         return Scaffold(
-          body: SafeArea(
-            child: IndexedStack(
-              index: widget.currentTab,
-              children: pages,
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            child: SafeArea(
+              child: IndexedStack(
+                index: widget.currentTab,
+                children: pages,
+              ),
             ),
           ),
           bottomNavigationBar: BottomNavigationBar(

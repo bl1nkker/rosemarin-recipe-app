@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:rosemarin_recipe_app/models/recipe_model.dart';
 import 'package:rosemarin_recipe_app/screens/recipe_details_screen.dart';
 
-class RecipeCard extends StatefulWidget {
+class HealthyRecipeCard extends StatefulWidget {
   final RecipeModel recipe;
-  const RecipeCard({Key? key, required this.recipe}) : super(key: key);
+  const HealthyRecipeCard({Key? key, required this.recipe}) : super(key: key);
 
   @override
-  State<RecipeCard> createState() => _RecipeCardState();
+  State<HealthyRecipeCard> createState() => _HealthyRecipeCardState();
 }
 
-class _RecipeCardState extends State<RecipeCard> {
+class _HealthyRecipeCardState extends State<HealthyRecipeCard> {
   @override
   Widget build(BuildContext context) {
     return Hero(
