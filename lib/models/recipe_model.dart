@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:rosemarin_recipe_app/models/ingredient_model.dart';
 part 'recipe_model.g.dart';
 
 @JsonSerializable()
@@ -10,13 +9,14 @@ class RecipeModel {
   final int id;
   final String title;
   final String image;
-  final List<IngredientModel> ingredients;
+  @JsonKey(name: 'ingredients')
+  final List<int> ingredients_ids;
 
   RecipeModel({
     required this.id,
     required this.title,
     required this.image,
-    required this.ingredients,
+    required this.ingredients_ids,
   });
 
   factory RecipeModel.fromJson(Map<String, dynamic> json) =>

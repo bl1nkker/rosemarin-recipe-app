@@ -3,10 +3,10 @@ import "package:dio/dio.dart";
 
 class Client {
   Dio init() {
-    Dio _dio = new Dio();
-    _dio.interceptors.add(new ApiInterceptors());
+    Dio _dio = Dio();
+    // _dio.interceptors.add(ApiInterceptors());
     // TODO: Set django url here
-    _dio.options.baseUrl = "http://example.com/api";
+    _dio.options.baseUrl = "http://127.0.0.1:8000/api";
     return _dio;
   }
 }

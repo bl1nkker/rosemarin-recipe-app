@@ -174,7 +174,7 @@ class Faker {
       final newRecipe = RecipeModel(
           id: i,
           title: recipeNames[i],
-          ingredients: randomIngredients,
+          ingredients_ids: randomIngredients.map((e) => e.id).toList(),
           image: '');
       recipes.add(newRecipe);
     }

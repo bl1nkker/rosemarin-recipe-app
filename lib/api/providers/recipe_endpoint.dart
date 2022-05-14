@@ -1,22 +1,46 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:rosemarin_recipe_app/models/product_model.dart';
+import 'package:rosemarin_recipe_app/models/recipe_model.dart';
 
 class RecipeProvider {
-  Dio _client;
+  final Dio _client;
 
   RecipeProvider(this._client);
 
-  Future<Map<String, dynamic>> fetchAllProduct() async {
+  Future<List<ProductModel>> fetchAllProducts() async {
     try {
-      // TODO: Set django url here
-      final response = await _client.get('/product');
-      // It's better to return a Model class instead but this is
-      // only for example purposes only
-      return json.decode(response.toString());
+      final response = await _client.get(
+        '/products/',
+      );
+      return List<ProductModel>.from(
+        response.data.map(
+          (product) => ProductModel.fromJson(product),
+        ),
+      );
     } on DioError catch (ex) {
       // Assuming there will be an errorMessage property in the JSON object
+      print('Error: $ex');
       String errorMessage = json.decode(ex.response.toString())["errorMessage"];
-      throw new Exception(errorMessage);
+      throw Exception(errorMessage);
+    }
+  }
+
+  Future<List<RecipeModel>> fetchAllRecipes() async {
+    try {
+      final response = await _client.get(
+        '/recipes/',
+      );
+      return List<RecipeModel>.from(
+        response.data.map(
+          (recipe) => RecipeModel.fromJson(recipe),
+        ),
+      );
+    } on DioError catch (ex) {
+      // Assuming there will be an errorMessage property in the JSON object
+      print('Error: $ex');
+      String errorMessage = json.decode(ex.response.toString())["errorMessage"];
+      throw Exception(errorMessage);
     }
   }
 }

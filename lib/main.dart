@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rosemarin_recipe_app/navigation/rosemarin_pages.dart';
+import 'package:rosemarin_recipe_app/api/api_client.dart';
+import 'package:rosemarin_recipe_app/api/providers/recipe_endpoint.dart';
 import 'package:rosemarin_recipe_app/navigation/router.dart';
-import 'package:rosemarin_recipe_app/screens/ml_screen.dart';
-import 'package:rosemarin_recipe_app/screens/recipe_screen.dart';
-import 'package:rosemarin_recipe_app/screens/saved_recipes_screen.dart';
 import 'package:rosemarin_recipe_app/state/app_state_manager.dart';
 import 'package:rosemarin_recipe_app/state/recipes_manager.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final Client client = Client();
+  MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -32,25 +31,32 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const Rosemarin(),
+      home: Rosemarin(
+        client: client,
+      ),
     );
   }
 }
 
 class Rosemarin extends StatefulWidget {
-  const Rosemarin({Key? key}) : super(key: key);
+  final Client client;
+  const Rosemarin({Key? key, required this.client}) : super(key: key);
 
   @override
   _RosemarinState createState() => _RosemarinState();
 }
 
 class _RosemarinState extends State<Rosemarin> {
-  final _appStateManager = AppStateManager();
-  final _recipeManager = RecipesManager();
+  late RecipeProvider recipeProvider;
+  late AppStateManager _appStateManager;
+  late RecipesManager _recipeManager;
   late AppRouter _appRouter;
 
   @override
   void initState() {
+    recipeProvider = RecipeProvider(widget.client.init());
+    _appStateManager = AppStateManager();
+    _recipeManager = RecipesManager(recipeProvider);
     _appRouter = AppRouter(
       appStateManager: _appStateManager,
     );

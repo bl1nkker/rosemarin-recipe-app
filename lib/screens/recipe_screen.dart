@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:rosemarin_recipe_app/components/recipe_card.dart';
 import 'package:rosemarin_recipe_app/models/recipe_model.dart';
 import 'package:rosemarin_recipe_app/state/recipes_manager.dart';
 
 class RecipeScreen extends StatefulWidget {
-  RecipeScreen({Key? key}) : super(key: key);
+  const RecipeScreen({Key? key}) : super(key: key);
 
   @override
   State<RecipeScreen> createState() => _RecipeScreenState();
@@ -38,8 +37,8 @@ class _RecipeScreenState extends State<RecipeScreen> {
   Widget buildRecipesList(List<RecipeModel> recipes) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      physics: BouncingScrollPhysics(),
-      padding: EdgeInsets.all(8),
+      physics: const BouncingScrollPhysics(),
+      padding: const EdgeInsets.all(8),
       child: Row(
         children: recipes.map((recipe) => RecipeCard(recipe: recipe)).toList(),
       ),
