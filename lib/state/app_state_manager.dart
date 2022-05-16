@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'app_cache.dart';
@@ -23,7 +25,14 @@ class AppStateManager extends ChangeNotifier {
   void initializeApp() async {
     // _loggedIn = await _appCache.isUserLoggedIn();
     _onboardingComplete = await _appCache.didCompleteOnboarding();
-    _initialized = true;
+    Timer(
+      const Duration(milliseconds: 2000),
+      () {
+        _initialized = true;
+        notifyListeners();
+      },
+    );
+
     notifyListeners();
   }
 
