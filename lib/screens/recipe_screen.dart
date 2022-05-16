@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rosemarin_recipe_app/color_styles.dart';
+import 'package:rosemarin_recipe_app/components/found_recipe_card.dart';
 import 'package:rosemarin_recipe_app/components/healthy_recipe_card.dart';
 import 'package:rosemarin_recipe_app/components/recipe_card.dart';
 import 'package:rosemarin_recipe_app/components/simple_recipe_card.dart';
@@ -24,41 +25,49 @@ class _RecipeScreenState extends State<RecipeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        const RecipeSearchField(),
-        const Text(
-          'Recipes',
-          style: TextStyle(
-              fontSize: 48,
-              color: ColorStyles.secondaryColor,
-              fontWeight: FontWeight.bold),
-        ),
-        Consumer<RecipesManager>(builder: (context, recipesManager, child) {
-          return buildRecipesList(recipesManager.recipes);
-        }),
-        const Text(
-          'Simple Recipes',
-          style: TextStyle(
-              fontSize: 24,
-              color: ColorStyles.secondaryColor,
-              fontWeight: FontWeight.w600),
-        ),
-        Consumer<RecipesManager>(builder: (context, recipesManager, child) {
-          return buildSimpleRecipesList(recipesManager.recipes);
-        }),
-        const Text(
-          '#Healthy_food',
-          style: TextStyle(
-              fontSize: 24,
-              color: ColorStyles.secondaryColor,
-              fontWeight: FontWeight.w600),
-        ),
-        Consumer<RecipesManager>(builder: (context, recipesManager, child) {
-          return buildHealthyRecipesList(recipesManager.recipes);
-        }),
-      ],
-    );
+    return Consumer<RecipesManager>(builder: (context, recipesManager, child) {
+      return ListView(
+        children: recipesManager.selectedProducts.isNotEmpty
+            ? [
+                const RecipeSearchField(),
+                const Text(
+                  'Found Recipes',
+                  style: TextStyle(
+                      fontSize: 48,
+                      color: ColorStyles.secondaryColor,
+                      fontWeight: FontWeight.bold),
+                ),
+                buildFoundRecipesList(recipesManager.foundRecipes)
+              ]
+            : [
+                const RecipeSearchField(),
+                const Text(
+                  'Recipes',
+                  style: TextStyle(
+                      fontSize: 48,
+                      color: ColorStyles.secondaryColor,
+                      fontWeight: FontWeight.bold),
+                ),
+                buildRecipesList(recipesManager.recipes),
+                const Text(
+                  'Simple Recipes',
+                  style: TextStyle(
+                      fontSize: 24,
+                      color: ColorStyles.secondaryColor,
+                      fontWeight: FontWeight.w600),
+                ),
+                buildSimpleRecipesList(recipesManager.recipes),
+                const Text(
+                  '#Healthy_food',
+                  style: TextStyle(
+                      fontSize: 24,
+                      color: ColorStyles.secondaryColor,
+                      fontWeight: FontWeight.w600),
+                ),
+                buildHealthyRecipesList(recipesManager.recipes)
+              ],
+      );
+    });
   }
 
   Widget buildRecipesList(List<RecipeModel> recipes) {
@@ -95,23 +104,60 @@ class _RecipeScreenState extends State<RecipeScreen> {
       ),
     );
   }
+
+  Widget buildFoundRecipesList(List<RecipeModel> recipes) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      physics: const BouncingScrollPhysics(),
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        children:
+            recipes.map((recipe) => FoundRecipeCard(recipe: recipe)).toList(),
+      ),
+    );
+  }
 }
 
-class RecipeSearchField extends StatelessWidget {
+class RecipeSearchField extends StatefulWidget {
   const RecipeSearchField({Key? key}) : super(key: key);
 
+  @override
+  State<RecipeSearchField> createState() => _RecipeSearchFieldState();
+}
+
+class _RecipeSearchFieldState extends State<RecipeSearchField> {
+  List<ProductModel> selectedProducts = [];
   List<Widget> createTagChips(List<ProductModel> productsList) {
     final chips = <Widget>[];
     productsList.take(10).forEach(
       (element) {
-        final chip = Chip(
-          label: Text(
-            element.title[0].toUpperCase() + element.title.substring(1),
-            style: const TextStyle(
-                color: ColorStyles.primaryColor, fontWeight: FontWeight.w300),
-          ),
-          backgroundColor: ColorStyles.secondaryColor.withOpacity(0.7),
-        );
+        final chip = GestureDetector(
+            onTap: () {
+              if (selectedProducts.contains(element)) {
+                setState(() {
+                  selectedProducts.remove(element);
+                });
+              } else {
+                setState(() {
+                  selectedProducts.add(element);
+                });
+              }
+              Provider.of<RecipesManager>(context, listen: false)
+                  .findRecipesByProduct(selectedProducts);
+            },
+            child: Chip(
+              label: Text(
+                element.title[0].toUpperCase() + element.title.substring(1),
+                style: TextStyle(
+                    color: selectedProducts.contains(element)
+                        ? ColorStyles.secondaryColor
+                        : ColorStyles.primaryColor,
+                    fontWeight: FontWeight.w300),
+              ),
+              backgroundColor: selectedProducts.contains(element)
+                  ? ColorStyles.accentColor
+                  : ColorStyles.secondaryColor.withOpacity(0.7),
+            ));
         chips.add(chip);
       },
     );

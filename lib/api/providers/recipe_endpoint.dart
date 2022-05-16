@@ -62,4 +62,26 @@ class RecipeProvider {
       throw Exception(errorMessage);
     }
   }
+
+  Future<List<RecipeModel>> findRecipeByProducts(
+      List<ProductModel> products) async {
+    try {
+      final response = await _client.get(
+        '/search/',
+        queryParameters: {
+          'products': products.map((product) => product.title).toList(),
+        },
+      );
+      return List<RecipeModel>.from(
+        response.data.map(
+          (recipe) => RecipeModel.fromJson(recipe),
+        ),
+      );
+    } on DioError catch (ex) {
+      // Assuming there will be an errorMessage property in the JSON object
+      print('Error: $ex');
+      String errorMessage = json.decode(ex.response.toString())["errorMessage"];
+      throw Exception(errorMessage);
+    }
+  }
 }
