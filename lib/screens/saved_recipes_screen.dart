@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SavedRecipesScreen extends StatefulWidget {
-  SavedRecipesScreen({Key? key}) : super(key: key);
+  const SavedRecipesScreen({Key? key}) : super(key: key);
 
   @override
   State<SavedRecipesScreen> createState() => _SavedRecipesScreenState();
@@ -10,8 +10,13 @@ class SavedRecipesScreen extends StatefulWidget {
 class _SavedRecipesScreenState extends State<SavedRecipesScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text('Saved Recipes!'),
-    );
+    return const Center(
+        child: Text(
+      'This part of the app is still in development. Follow the news about our application!',
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        fontSize: 30,
+      ),
+    ));
   }
 }

@@ -10,6 +10,13 @@ class MLScreen extends StatefulWidget {
 class _MLScreenState extends State<MLScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(child: Text('ML Screen'));
+    return const Center(
+        child: Text(
+      'This part of the app is still in development. Follow the news about our application!',
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        fontSize: 30,
+      ),
+    ));
   }
 }
