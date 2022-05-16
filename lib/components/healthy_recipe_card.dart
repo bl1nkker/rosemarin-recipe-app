@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rosemarin_recipe_app/color_styles.dart';
 import 'package:rosemarin_recipe_app/models/recipe_model.dart';
 import 'package:rosemarin_recipe_app/screens/recipe_details_screen.dart';
 
@@ -59,7 +60,7 @@ class _HealthyRecipeCardState extends State<HealthyRecipeCard> {
         children: [
           Icon(
             icon,
-            color: Colors.green,
+            color: ColorStyles.accentColor,
             size: 12,
           ),
           const SizedBox(width: 5),
@@ -77,7 +78,7 @@ class _HealthyRecipeCardState extends State<HealthyRecipeCard> {
       ),
       width: 200,
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: ColorStyles.primaryColor,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(5.0),
           topRight: Radius.circular(5.0),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rosemarin_recipe_app/color_styles.dart';
 import 'package:rosemarin_recipe_app/models/recipe_model.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -37,7 +38,7 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                 height: 250,
                 decoration: BoxDecoration(
                   // TODO: Set default image color
-                  color: Colors.greenAccent,
+                  color: ColorStyles.accentColor,
                   image: DecorationImage(
                       image: NetworkImage(
                         widget.recipe.image,
@@ -64,7 +65,7 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                               },
                               child: const Icon(Icons.arrow_back_ios_sharp,
                                   // TODO: Work with colors
-                                  color: Colors.white),
+                                  color: ColorStyles.primaryColor),
                             ),
                           ),
                         ],
@@ -107,7 +108,7 @@ class DetailsPanelWidget extends StatelessWidget {
                   const BorderRadius.vertical(top: Radius.circular(20)),
               gradient: LinearGradient(begin: Alignment.bottomRight, colors: [
                 const Color.fromARGB(255, 255, 255, 255).withOpacity(1),
-                // Colors.black.withOpacity(.3),
+                // ColorStyles.secondaryColor.withOpacity(.3),
                 const Color.fromARGB(255, 255, 255, 255).withOpacity(.6),
               ])),
           child: Column(
@@ -118,7 +119,7 @@ class DetailsPanelWidget extends StatelessWidget {
                   width: 50,
                   height: 8,
                   decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: ColorStyles.primaryColor,
                       borderRadius: BorderRadius.circular(12)),
                 ),
               ),
