@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rosemarin_recipe_app/color_styles.dart';
 import 'package:rosemarin_recipe_app/navigation/rosemarin_pages.dart';
 import 'package:rosemarin_recipe_app/screens/ml_screen.dart';
 import 'package:rosemarin_recipe_app/screens/recipe_screen.dart';
 import 'package:rosemarin_recipe_app/screens/saved_recipes_screen.dart';
 import 'package:rosemarin_recipe_app/state/app_state_manager.dart';
-import 'package:rosemarin_recipe_app/state/recipes_manager.dart';
 
 class Home extends StatefulWidget {
   static MaterialPage page(int currentTab) {
@@ -55,17 +55,34 @@ class _HomeState extends State<Home> {
             ),
           ),
           bottomNavigationBar: BottomNavigationBar(
-            selectedItemColor:
-                Theme.of(context).textSelectionTheme.selectionColor,
+            selectedItemColor: ColorStyles.accentColor,
             currentIndex: widget.currentTab,
             onTap: (index) {
               Provider.of<AppStateManager>(context, listen: false)
                   .goToTab(index);
             },
             items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(icon: Icon(Icons.favorite), label: ''),
-              BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
-              BottomNavigationBarItem(icon: Icon(Icons.computer), label: ''),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.favorite,
+                  size: 32,
+                ),
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.search,
+                  size: 32,
+                ),
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.computer,
+                  size: 32,
+                ),
+                label: '',
+              ),
             ],
           ),
         );

@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 import 'app_cache.dart';
@@ -25,14 +23,8 @@ class AppStateManager extends ChangeNotifier {
   void initializeApp() async {
     // _loggedIn = await _appCache.isUserLoggedIn();
     _onboardingComplete = await _appCache.didCompleteOnboarding();
-
-    Timer(
-      const Duration(milliseconds: 2000),
-      () {
-        _initialized = true;
-        notifyListeners();
-      },
-    );
+    _initialized = true;
+    notifyListeners();
   }
 
   // void login(String username, String password) async {

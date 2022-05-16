@@ -126,41 +126,40 @@ class RecipeSearchField extends StatefulWidget {
 }
 
 class _RecipeSearchFieldState extends State<RecipeSearchField> {
+  final TextEditingController _controller = TextEditingController();
   List<ProductModel> selectedProducts = [];
   List<Widget> createTagChips(List<ProductModel> productsList) {
     final chips = <Widget>[];
-    productsList.take(10).forEach(
-      (element) {
-        final chip = GestureDetector(
-            onTap: () {
-              if (selectedProducts.contains(element)) {
-                setState(() {
-                  selectedProducts.remove(element);
-                });
-              } else {
-                setState(() {
-                  selectedProducts.add(element);
-                });
-              }
-              Provider.of<RecipesManager>(context, listen: false)
-                  .findRecipesByProduct(selectedProducts);
-            },
-            child: Chip(
-              label: Text(
-                element.title[0].toUpperCase() + element.title.substring(1),
-                style: TextStyle(
-                    color: selectedProducts.contains(element)
-                        ? ColorStyles.secondaryColor
-                        : ColorStyles.primaryColor,
-                    fontWeight: FontWeight.w300),
-              ),
-              backgroundColor: selectedProducts.contains(element)
-                  ? ColorStyles.accentColor
-                  : ColorStyles.secondaryColor.withOpacity(0.7),
-            ));
-        chips.add(chip);
-      },
-    );
+    for (var element in productsList) {
+      final chip = GestureDetector(
+          onTap: () {
+            if (selectedProducts.contains(element)) {
+              setState(() {
+                selectedProducts.remove(element);
+              });
+            } else {
+              setState(() {
+                selectedProducts.add(element);
+              });
+            }
+            Provider.of<RecipesManager>(context, listen: false)
+                .findRecipesByProduct(selectedProducts);
+          },
+          child: Chip(
+            label: Text(
+              element.title[0].toUpperCase() + element.title.substring(1),
+              style: TextStyle(
+                  color: selectedProducts.contains(element)
+                      ? ColorStyles.secondaryColor
+                      : ColorStyles.primaryColor,
+                  fontWeight: FontWeight.w300),
+            ),
+            backgroundColor: selectedProducts.contains(element)
+                ? ColorStyles.accentColor
+                : ColorStyles.secondaryColor.withOpacity(0.7),
+          ));
+      chips.add(chip);
+    }
 
     return chips;
   }
@@ -170,6 +169,11 @@ class _RecipeSearchFieldState extends State<RecipeSearchField> {
     return Column(
       children: [
         TextField(
+          controller: _controller,
+          onChanged: (value) {
+            Provider.of<RecipesManager>(context, listen: false)
+                .findProductsBySubstring(value);
+          },
           decoration: InputDecoration(
             hintText: 'Search for products',
             prefixIcon: const Icon(Icons.search),
@@ -188,9 +192,12 @@ class _RecipeSearchFieldState extends State<RecipeSearchField> {
               alignment: WrapAlignment.start,
               spacing: 5,
               children: [
-                ...createTagChips(
-                    Provider.of<RecipesManager>(context, listen: false)
-                        .products),
+                ...createTagChips([
+                  ...Provider.of<RecipesManager>(context, listen: false)
+                      .selectedProducts,
+                  ...Provider.of<RecipesManager>(context, listen: false)
+                      .currentProducts,
+                ]),
               ],
             ),
           ),

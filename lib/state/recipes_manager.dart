@@ -16,12 +16,14 @@ class RecipesManager extends ChangeNotifier {
   List<ProductModel> _products = [];
   List<IngredientModel> _ingredients = [];
   List<ProductModel> _selectedProducts = [];
+  List<ProductModel> _currentProducts = [];
 
   bool get isError => _isError;
   List<ProductModel> get selectedProducts => _selectedProducts;
   List<RecipeModel> get recipes => _recipes;
   List<RecipeModel> get foundRecipes => _foundRecipes;
   List<ProductModel> get products => _products;
+  List<ProductModel> get currentProducts => _currentProducts;
   List<IngredientModel> get ingredients => _ingredients;
 
   void initialize() async {
@@ -31,6 +33,7 @@ class RecipesManager extends ChangeNotifier {
       _recipes = await recipeProvider.fetchAllRecipes();
       _ingredients = await recipeProvider.fetchAllIngredients();
       _isError = false;
+      _currentProducts = _products.take(10).toList();
       print('Retrieved: ${_recipes.length} recipes');
       print('Retrieved: ${_products.length} products');
       print('Retrieved: ${_ingredients.length} ingredients');
@@ -43,6 +46,9 @@ class RecipesManager extends ChangeNotifier {
 
   Future findRecipesByProduct(List<ProductModel> products) async {
     _selectedProducts = products;
+    _currentProducts = _products
+        .where((element) => !_selectedProducts.contains(element))
+        .toList();
     try {
       _foundRecipes = await recipeProvider.findRecipeByProducts(products);
       _isError = false;
@@ -50,6 +56,14 @@ class RecipesManager extends ChangeNotifier {
       print('Error on findRecipesByProduct: $e');
       _isError = true;
     }
+    notifyListeners();
+  }
+
+  Future findProductsBySubstring(String substring) async {
+    _currentProducts = _products
+        .where((product) =>
+            product.title.toLowerCase().contains(substring.toLowerCase()))
+        .toList();
     notifyListeners();
   }
 }

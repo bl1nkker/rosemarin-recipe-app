@@ -69,7 +69,7 @@ class RecipeProvider {
       final response = await _client.get(
         '/search/',
         queryParameters: {
-          'products': products.map((product) => product.title).toList(),
+          'products': products.map((product) => product.title.trim()).toList(),
         },
       );
       return List<RecipeModel>.from(
