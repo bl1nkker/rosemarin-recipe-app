@@ -49,12 +49,20 @@ class RecipesManager extends ChangeNotifier {
     _currentProducts = _products
         .where((element) => !_selectedProducts.contains(element))
         .toList();
-    try {
-      _foundRecipes = await recipeProvider.findRecipeByProducts(products);
-      _isError = false;
-    } catch (e) {
-      print('Error on findRecipesByProduct: $e');
-      _isError = true;
+    if (_selectedProducts.isNotEmpty) {
+      for (var product in _selectedProducts) {
+        for (var recipe in _recipes) {
+          for (var ingredient in recipe.ingredients) {
+            if (ingredient.name.contains(product.title)) {
+              if (!_foundRecipes.contains(recipe)) {
+                _foundRecipes.add(recipe);
+              }
+            }
+          }
+        }
+      }
+    } else {
+      _foundRecipes = [];
     }
     notifyListeners();
   }

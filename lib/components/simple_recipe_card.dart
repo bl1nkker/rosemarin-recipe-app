@@ -97,7 +97,7 @@ class _SimpleRecipeCardState extends State<SimpleRecipeCard> {
           ),
           const SizedBox(height: 10),
           Text(
-            'Only ${widget.recipe.ingredients_ids.length} ingredients!',
+            'Only ${widget.recipe.ingredients.length} ingredients!',
             textAlign: TextAlign.center,
             style: const TextStyle(
                 fontSize: 8,

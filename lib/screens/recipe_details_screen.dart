@@ -118,13 +118,14 @@ class _DetailsPanelWidgetState extends State<DetailsPanelWidget> {
     }
   }
 
-  List<Widget> createTagChips(BuildContext context, List<int> ingredientIds) {
-    final List<IngredientModel> ingrediens = ingredientIds
-        .map((id) => Provider.of<RecipesManager>(context, listen: false)
-            .ingredients
-            .firstWhere((ingredient) => ingredient.id == id))
-        .toList();
-    final List<ProductModel?> usedProducts = ingrediens
+  List<Widget> createTagChips(
+      BuildContext context, List<IngredientModel> ingredients) {
+    // final List<IngredientModel> ingrediens = ingredientIds
+    //     .map((id) => Provider.of<RecipesManager>(context, listen: false)
+    //         .ingredients
+    //         .firstWhere((ingredient) => ingredient.id == id))
+    //     .toList();
+    final List<ProductModel?> usedProducts = ingredients
         .map((ingredient) => Provider.of<RecipesManager>(context, listen: false)
             .products
             .firstWhereOrNull(
@@ -142,7 +143,7 @@ class _DetailsPanelWidgetState extends State<DetailsPanelWidget> {
     });
 
     final chips = <Widget>[];
-    for (var element in ingrediens) {
+    for (var element in ingredients) {
       final chip = Row(children: [
         Chip(
             label: Text(
@@ -240,8 +241,7 @@ class _DetailsPanelWidgetState extends State<DetailsPanelWidget> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        ...createTagChips(
-                            context, widget.recipe.ingredients_ids),
+                        ...createTagChips(context, widget.recipe.ingredients),
                       ],
                     ),
                     const SizedBox(

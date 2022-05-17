@@ -67,7 +67,7 @@ class RecipeProvider {
       List<ProductModel> products) async {
     try {
       final response = await _client.get(
-        '/search/',
+        '/search',
         queryParameters: {
           'products': products.map((product) => product.title.trim()).toList(),
         },
