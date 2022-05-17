@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rosemarin_recipe_app/navigation/rosemarin_pages.dart';
 import 'package:rosemarin_recipe_app/screens/home_screen.dart';
-import 'package:rosemarin_recipe_app/screens/onboarding_screen.dart';
 import 'package:rosemarin_recipe_app/screens/splash_screen.dart';
 import 'package:rosemarin_recipe_app/state/app_state_manager.dart';
 
@@ -32,8 +31,6 @@ class AppRouter extends RouterDelegate
       pages: [
         if (!appStateManager.isInitialized) ...[
           SplashScreen.page(),
-        ] else if (!appStateManager.isOnboardingComplete) ...[
-          OnboardingScreen.page(),
         ] else ...[
           Home.page(appStateManager.getSelectedTab)
         ]
