@@ -6,7 +6,7 @@ class Client {
     Dio _dio = Dio();
     // _dio.interceptors.add(ApiInterceptors());
     // TODO: Set django url here
-    _dio.options.baseUrl = "http://127.0.0.1:8000/api";
+    _dio.options.baseUrl = "https://rosemarin-server.herokuapp.com/api";
     return _dio;
   }
 }
