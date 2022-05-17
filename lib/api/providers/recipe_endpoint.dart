@@ -45,6 +45,24 @@ class RecipeProvider {
     }
   }
 
+  Future<List<RecipeModel>> fetchRandomRecipes() async {
+    try {
+      final response = await _client.get(
+        '/random/',
+      );
+      return List<RecipeModel>.from(
+        response.data.map(
+          (recipe) => RecipeModel.fromJson(recipe),
+        ),
+      );
+    } on DioError catch (ex) {
+      // Assuming there will be an errorMessage property in the JSON object
+      print('Error: $ex');
+      String errorMessage = json.decode(ex.response.toString())["errorMessage"];
+      throw Exception(errorMessage);
+    }
+  }
+
   Future<List<IngredientModel>> fetchAllIngredients() async {
     try {
       final response = await _client.get(

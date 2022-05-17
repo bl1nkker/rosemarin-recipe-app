@@ -10,8 +10,11 @@ class RecipesManager extends ChangeNotifier {
   RecipesManager(this.recipeProvider);
 
   bool _isError = false;
+  bool _isLoading = false;
 
   List<RecipeModel> _recipes = [];
+  List<RecipeModel> _randomRecipes = [];
+  List<RecipeModel> _healthyRecipes = [];
   List<RecipeModel> _foundRecipes = [];
   List<ProductModel> _products = [];
   List<IngredientModel> _ingredients = [];
@@ -19,8 +22,11 @@ class RecipesManager extends ChangeNotifier {
   List<ProductModel> _currentProducts = [];
 
   bool get isError => _isError;
+  bool get isLoading => _isLoading;
   List<ProductModel> get selectedProducts => _selectedProducts;
   List<RecipeModel> get recipes => _recipes;
+  List<RecipeModel> get randomRecipes => _randomRecipes;
+  List<RecipeModel> get healthyRecipes => _healthyRecipes;
   List<RecipeModel> get foundRecipes => _foundRecipes;
   List<ProductModel> get products => _products;
   List<ProductModel> get currentProducts => _currentProducts;
@@ -28,11 +34,15 @@ class RecipesManager extends ChangeNotifier {
 
   void initialize() async {
     // TODO: Fetch recipes here
+    _isLoading = true;
     try {
       _products = await recipeProvider.fetchAllProducts();
       _recipes = await recipeProvider.fetchAllRecipes();
+      _randomRecipes = await recipeProvider.fetchRandomRecipes();
+      _healthyRecipes = await recipeProvider.fetchRandomRecipes();
       _ingredients = await recipeProvider.fetchAllIngredients();
       _isError = false;
+      _isLoading = false;
       _currentProducts = _products.take(10).toList();
       print('Retrieved: ${_recipes.length} recipes');
       print('Retrieved: ${_products.length} products');
@@ -40,6 +50,7 @@ class RecipesManager extends ChangeNotifier {
     } catch (e) {
       print('Error: $e');
       _isError = true;
+      _isLoading = false;
     }
     notifyListeners();
   }

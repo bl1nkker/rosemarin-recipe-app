@@ -26,47 +26,49 @@ class _RecipeScreenState extends State<RecipeScreen> {
   @override
   Widget build(BuildContext context) {
     return Consumer<RecipesManager>(builder: (context, recipesManager, child) {
-      return ListView(
-        children: recipesManager.selectedProducts.isNotEmpty
-            ? [
-                const RecipeSearchField(),
-                const Text(
-                  'Found Recipes',
-                  style: TextStyle(
-                      fontSize: 48,
-                      color: ColorStyles.secondaryColor,
-                      fontWeight: FontWeight.bold),
-                ),
-                buildFoundRecipesList(recipesManager.foundRecipes)
-              ]
-            : [
-                const RecipeSearchField(),
-                const Text(
-                  'Recipes',
-                  style: TextStyle(
-                      fontSize: 48,
-                      color: ColorStyles.secondaryColor,
-                      fontWeight: FontWeight.bold),
-                ),
-                buildRecipesList(recipesManager.recipes),
-                const Text(
-                  'Simple Recipes',
-                  style: TextStyle(
-                      fontSize: 24,
-                      color: ColorStyles.secondaryColor,
-                      fontWeight: FontWeight.w600),
-                ),
-                buildSimpleRecipesList(recipesManager.recipes),
-                const Text(
-                  '#Healthy_food',
-                  style: TextStyle(
-                      fontSize: 24,
-                      color: ColorStyles.secondaryColor,
-                      fontWeight: FontWeight.w600),
-                ),
-                buildHealthyRecipesList(recipesManager.recipes)
-              ],
-      );
+      return recipesManager.isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : ListView(
+              children: recipesManager.selectedProducts.isNotEmpty
+                  ? [
+                      const RecipeSearchField(),
+                      const Text(
+                        'Found Recipes',
+                        style: TextStyle(
+                            fontSize: 48,
+                            color: ColorStyles.secondaryColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      buildFoundRecipesList(recipesManager.foundRecipes)
+                    ]
+                  : [
+                      const RecipeSearchField(),
+                      const Text(
+                        'Recipes',
+                        style: TextStyle(
+                            fontSize: 48,
+                            color: ColorStyles.secondaryColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      buildRecipesList(recipesManager.recipes),
+                      const Text(
+                        'Simple Recipes',
+                        style: TextStyle(
+                            fontSize: 24,
+                            color: ColorStyles.secondaryColor,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      buildSimpleRecipesList(recipesManager.healthyRecipes),
+                      const Text(
+                        '#Healthy_food',
+                        style: TextStyle(
+                            fontSize: 24,
+                            color: ColorStyles.secondaryColor,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      buildHealthyRecipesList(recipesManager.randomRecipes)
+                    ],
+            );
     });
   }
 
