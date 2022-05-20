@@ -112,10 +112,19 @@ class _RecipeScreenState extends State<RecipeScreen> {
       scrollDirection: Axis.vertical,
       physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.all(8),
-      child: Column(
-        children:
-            recipes.map((recipe) => FoundRecipeCard(recipe: recipe)).toList(),
-      ),
+      child: recipes.isEmpty
+          ? const Text(
+              'No recipes found',
+              style: TextStyle(
+                  fontSize: 24,
+                  color: ColorStyles.secondaryColor,
+                  fontWeight: FontWeight.w600),
+            )
+          : Column(
+              children: recipes
+                  .map((recipe) => FoundRecipeCard(recipe: recipe))
+                  .toList(),
+            ),
     );
   }
 }
