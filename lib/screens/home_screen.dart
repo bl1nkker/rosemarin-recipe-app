@@ -31,7 +31,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   static List<Widget> pages = <Widget>[
-    SavedRecipesScreen(),
+    const SavedRecipesScreen(),
     const RecipeScreen(),
     const MLScreen()
   ];
@@ -45,6 +45,30 @@ class _HomeState extends State<Home> {
         child,
       ) {
         return Scaffold(
+          appBar: AppBar(
+            // title: const Text('Rosemarin'),
+            backgroundColor: ColorStyles.accentColor,
+            leading: const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Image(
+                image: AssetImage(
+                  'assets/icon/icon.png',
+                ),
+              ),
+            ),
+
+            actions: <Widget>[
+              IconButton(
+                icon: const Icon(
+                  Icons.question_mark_sharp,
+                  color: ColorStyles.secondaryColor,
+                ),
+                onPressed: () {
+                  appStateManager.repeatOnboarding();
+                },
+              ),
+            ],
+          ),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             child: SafeArea(
