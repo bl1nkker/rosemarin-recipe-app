@@ -57,7 +57,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         MaterialButton(
-          child: const Text('Skip'),
+          child: const Text('Пропустить'),
           onPressed: () {
             Provider.of<AppStateManager>(context, listen: false)
                 .completeOnboarding();
@@ -70,7 +70,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget buildPages() {
     return PageView(
       controller: controller,
-      children: const [],
+      children: [
+        onboardPageView(const AssetImage('assets/icon/icon.png'),
+            'Добро пожаловать в Rosemarin!'),
+        onboardPageView(const AssetImage('assets/icon/icon.png'),
+            'Приложение призвано упростить ваш стандартный процесс приготовления пищи, и сейчас мы покажем как!'),
+        onboardPageView(const AssetImage('assets/icon/icon.png'),
+            'На главном экране вы можете увидеть список всех рецептом, здоровых рецептов и простых рецептов. Выбирайте на свой вкус!'),
+        onboardPageView(const AssetImage('assets/icon/icon.png'),
+            'При переходе на страницу рецепта вы можете просмотреть информацию о его ингредиентах и общей пищевой ценности'),
+        onboardPageView(const AssetImage('assets/icon/icon.png'),
+            'А теперь к главному... выберите продукты которые есть в вашем холодильнике и сможете увидеть рецепты, которые вам подходят!'),
+        onboardPageView(const AssetImage('assets/icon/icon.png'),
+            'Можно выбрать несколько продуктов, тем самым расширив список рецептов!'),
+        onboardPageView(const AssetImage('assets/icon/icon.png'),
+            'Рецепты также можно помечать как "Любимый". Они будут сохранены во вкладке "Любимые"'),
+        onboardPageView(const AssetImage('assets/icon/icon.png'),
+            'Следите за обновлениями нашего приложения на сайте!'),
+      ],
     );
   }
 
@@ -102,7 +119,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget buildIndicator() {
     return SmoothPageIndicator(
       controller: controller,
-      count: 3,
+      count: 8,
       effect: WormEffect(activeDotColor: rwColor),
     );
   }
