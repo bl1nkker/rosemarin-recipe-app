@@ -41,6 +41,18 @@ class RecipesManager extends ChangeNotifier {
       _randomRecipes = await recipeProvider.fetchRandomRecipes();
       _healthyRecipes = await recipeProvider.fetchRandomRecipes();
       _ingredients = await recipeProvider.fetchAllIngredients();
+      _products = _products.where(
+        (product) {
+          for (var recipe in _recipes) {
+            for (var ingredient in recipe.ingredients) {
+              if (ingredient.name.contains(product.title)) {
+                return true;
+              }
+            }
+          }
+          return false;
+        },
+      ).toList();
       _isError = false;
       _isLoading = false;
       _currentProducts = _products.take(10).toList();
