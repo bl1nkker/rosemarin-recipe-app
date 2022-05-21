@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ColorStyles {
-  static const Color primaryColor = Colors.white;
-  static const Color secondaryColor = Colors.black;
-  static const Color accentColor = Colors.amberAccent;
+  static const Color primaryColor = Color.fromARGB(255, 230, 230, 230);
+  static const Color secondaryColor = Color.fromARGB(255, 63, 61, 86);
+  static const Color accentColor = Color.fromARGB(255, 172, 214, 65);
 }

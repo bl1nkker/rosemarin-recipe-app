@@ -27,7 +27,10 @@ class _RecipeScreenState extends State<RecipeScreen> {
   Widget build(BuildContext context) {
     return Consumer<RecipesManager>(builder: (context, recipesManager, child) {
       return recipesManager.isLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(
+              child: CircularProgressIndicator(
+              color: ColorStyles.accentColor,
+            ))
           : ListView(
               children: recipesManager.selectedProducts.isNotEmpty
                   ? [

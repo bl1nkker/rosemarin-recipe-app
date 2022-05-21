@@ -47,7 +47,7 @@ class _HomeState extends State<Home> {
         return Scaffold(
           appBar: AppBar(
             // title: const Text('Rosemarin'),
-            backgroundColor: ColorStyles.accentColor,
+            backgroundColor: ColorStyles.secondaryColor,
             leading: const Padding(
               padding: EdgeInsets.all(8.0),
               child: Image(
@@ -61,7 +61,7 @@ class _HomeState extends State<Home> {
               IconButton(
                 icon: const Icon(
                   Icons.question_mark_sharp,
-                  color: ColorStyles.secondaryColor,
+                  color: ColorStyles.accentColor,
                 ),
                 onPressed: () {
                   appStateManager.repeatOnboarding();
