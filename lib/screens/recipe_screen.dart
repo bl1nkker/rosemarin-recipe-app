@@ -20,7 +20,6 @@ class _RecipeScreenState extends State<RecipeScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<RecipesManager>(context, listen: false).initialize();
   }
 
   @override

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rosemarin_recipe_app/color_styles.dart';
 import 'package:rosemarin_recipe_app/models/ingredient_model.dart';
 import 'package:rosemarin_recipe_app/models/recipe_model.dart';
 import 'package:rosemarin_recipe_app/screens/recipe_details_screen.dart';
+import 'package:rosemarin_recipe_app/state/recipes_manager.dart';
 
 class FoundRecipeCard extends StatefulWidget {
   final RecipeModel recipe;
@@ -14,11 +16,6 @@ class FoundRecipeCard extends StatefulWidget {
 
 class _FoundRecipeCardState extends State<FoundRecipeCard> {
   List<Widget> createTagChips(List<IngredientModel> ingredients) {
-    // final List<IngredientModel> ingrediens = ingredientIds
-    //     .map((id) => Provider.of<RecipesManager>(context, listen: false)
-    //         .ingredients
-    //         .firstWhere((ingredient) => ingredient.id == id))
-    //     .toList();
     final chips = <Widget>[];
     for (var element in ingredients) {
       final chip = Chip(
@@ -84,8 +81,13 @@ class _FoundRecipeCardState extends State<FoundRecipeCard> {
                             onTap: () {
                               // TODO: Save to favorites
                             },
-                            child: const Icon(
-                              Icons.favorite,
+                            child: Icon(
+                              Provider.of<RecipesManager>(context,
+                                          listen: false)
+                                      .favoriteRecipes
+                                      .contains(widget.recipe)
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
                               color: ColorStyles.accentColor,
                               size: 24,
                             ),

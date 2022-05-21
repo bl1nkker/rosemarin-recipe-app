@@ -17,11 +17,56 @@ class RecipeDetailsScreen extends StatefulWidget {
 }
 
 class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
+  final GlobalKey _scaffoldKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     final PanelController panelController = PanelController();
-    final ThemeData themeData = Theme.of(context);
+
     return Scaffold(
+      key: _scaffoldKey,
+      appBar: AppBar(
+        title: Text(widget.recipe.title, style: const TextStyle(fontSize: 16)),
+        backgroundColor: ColorStyles.secondaryColor,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const Icon(Icons.arrow_back_ios_sharp,
+              color: ColorStyles.accentColor),
+        ),
+        actions: [
+          Consumer<RecipesManager>(builder:
+              (BuildContext context, RecipesManager recipesManager, child) {
+            return GestureDetector(
+              onTap: () {
+                String snackBarText = '';
+                if (recipesManager.favoriteRecipes.contains(widget.recipe)) {
+                  recipesManager.removeFavoriteRecipe(widget.recipe);
+                  snackBarText = 'Removed from favorites';
+                } else {
+                  recipesManager.saveFavoriteRecipe(widget.recipe);
+                  snackBarText = 'Added to favorites';
+                }
+                ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      snackBarText,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(color: ColorStyles.accentColor),
+                    ),
+                    backgroundColor: ColorStyles.secondaryColor,
+                  ),
+                );
+              },
+              child: Icon(
+                  recipesManager.favoriteRecipes.contains(widget.recipe)
+                      ? Icons.favorite
+                      : Icons.favorite_border,
+                  color: ColorStyles.accentColor),
+            );
+          }),
+        ],
+      ),
       body: Hero(
         transitionOnUserGestures: true,
         tag: widget.recipe.id,
@@ -40,49 +85,20 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
                 controller: controller,
                 panelController: panelController),
             body: Container(
-                height: 250,
-                decoration: BoxDecoration(
-                  // TODO: Set default image color
-                  color: ColorStyles.accentColor,
-                  image: DecorationImage(
-                      alignment: Alignment.topCenter,
-                      image: NetworkImage(
-                        widget.recipe.image,
-                      ),
-
-                      // alignment: Alignment(-.7, 0),
-                      fit: BoxFit.fitHeight),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: ColorStyles.accentColor,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            width: 50,
-                            height: 50,
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Icon(Icons.arrow_back_ios_sharp,
-                                  // TODO: Work with colors
-                                  color: ColorStyles.secondaryColor),
-                            ),
-                          ),
-                        ],
-                      ),
+              height: 250,
+              decoration: BoxDecoration(
+                color: ColorStyles.secondaryColor,
+                image: DecorationImage(
+                    alignment: Alignment.topCenter,
+                    image: NetworkImage(
+                      widget.recipe.image,
                     ),
-                  ],
-                )),
+
+                    // alignment: Alignment(-.7, 0),
+                    fit: BoxFit.fitHeight),
+              ),
+              child: const SizedBox(),
+            ),
           ),
         ),
       ),
@@ -120,11 +136,6 @@ class _DetailsPanelWidgetState extends State<DetailsPanelWidget> {
 
   List<Widget> createTagChips(
       BuildContext context, List<IngredientModel> ingredients) {
-    // final List<IngredientModel> ingrediens = ingredientIds
-    //     .map((id) => Provider.of<RecipesManager>(context, listen: false)
-    //         .ingredients
-    //         .firstWhere((ingredient) => ingredient.id == id))
-    //     .toList();
     final List<ProductModel?> usedProducts = ingredients
         .map((ingredient) => Provider.of<RecipesManager>(context, listen: false)
             .products

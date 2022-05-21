@@ -6,6 +6,7 @@ import 'package:rosemarin_recipe_app/screens/ml_screen.dart';
 import 'package:rosemarin_recipe_app/screens/recipe_screen.dart';
 import 'package:rosemarin_recipe_app/screens/saved_recipes_screen.dart';
 import 'package:rosemarin_recipe_app/state/app_state_manager.dart';
+import 'package:rosemarin_recipe_app/state/recipes_manager.dart';
 
 class Home extends StatefulWidget {
   static MaterialPage page(int currentTab) {
@@ -35,6 +36,12 @@ class _HomeState extends State<Home> {
     const RecipeScreen(),
     const MLScreen()
   ];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<RecipesManager>(context, listen: false).initialize();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,15 +76,24 @@ class _HomeState extends State<Home> {
               ),
             ],
           ),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            child: SafeArea(
-              child: IndexedStack(
-                index: widget.currentTab,
-                children: pages,
-              ),
-            ),
-          ),
+          body: Consumer<RecipesManager>(
+              builder: (context, RecipesManager recipesManager, child) =>
+                  recipesManager.isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: ColorStyles.accentColor,
+                          ),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
+                          child: SafeArea(
+                            child: IndexedStack(
+                              index: widget.currentTab,
+                              children: pages,
+                            ),
+                          ),
+                        )),
           bottomNavigationBar: BottomNavigationBar(
             selectedItemColor: ColorStyles.accentColor,
             currentIndex: widget.currentTab,

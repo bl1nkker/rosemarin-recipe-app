@@ -3,9 +3,11 @@ import 'package:rosemarin_recipe_app/api/providers/recipe_endpoint.dart';
 import 'package:rosemarin_recipe_app/models/ingredient_model.dart';
 import 'package:rosemarin_recipe_app/models/product_model.dart';
 import 'package:rosemarin_recipe_app/models/recipe_model.dart';
+import 'package:rosemarin_recipe_app/state/app_cache.dart';
 
 class RecipesManager extends ChangeNotifier {
   final RecipeProvider recipeProvider;
+  final _appCache = AppCache();
 
   RecipesManager(this.recipeProvider);
 
@@ -16,6 +18,7 @@ class RecipesManager extends ChangeNotifier {
   List<RecipeModel> _randomRecipes = [];
   List<RecipeModel> _healthyRecipes = [];
   List<RecipeModel> _foundRecipes = [];
+  List<RecipeModel> _favoriteRecipes = [];
   List<ProductModel> _products = [];
   List<IngredientModel> _ingredients = [];
   List<ProductModel> _selectedProducts = [];
@@ -26,6 +29,8 @@ class RecipesManager extends ChangeNotifier {
   List<ProductModel> get selectedProducts => _selectedProducts;
   List<RecipeModel> get recipes => _recipes;
   List<RecipeModel> get randomRecipes => _randomRecipes;
+  List<RecipeModel> get favoriteRecipes => _favoriteRecipes;
+
   List<RecipeModel> get healthyRecipes => _healthyRecipes;
   List<RecipeModel> get foundRecipes => _foundRecipes;
   List<ProductModel> get products => _products;
@@ -53,6 +58,13 @@ class RecipesManager extends ChangeNotifier {
           return false;
         },
       ).toList();
+      final favRecipeIds = await _appCache.getFavoriteRecipes();
+      _favoriteRecipes = _recipes
+          .where(
+            (recipe) => favRecipeIds.contains(recipe.id.toString()),
+          )
+          .toList();
+
       _isError = false;
       _isLoading = false;
       _currentProducts = _products.take(10).toList();
@@ -94,6 +106,28 @@ class RecipesManager extends ChangeNotifier {
     _currentProducts = _products
         .where((product) =>
             product.title.toLowerCase().contains(substring.toLowerCase()))
+        .toList();
+    notifyListeners();
+  }
+
+  void saveFavoriteRecipe(RecipeModel recipe) async {
+    _appCache.cacheRecipe(recipe);
+    final favRecipeIds = await _appCache.getFavoriteRecipes();
+    _favoriteRecipes = _recipes
+        .where(
+          (recipe) => favRecipeIds.contains(recipe.id.toString()),
+        )
+        .toList();
+    notifyListeners();
+  }
+
+  void removeFavoriteRecipe(RecipeModel recipe) async {
+    _appCache.uncacheRecipe(recipe);
+    final favRecipeIds = await _appCache.getFavoriteRecipes();
+    _favoriteRecipes = _recipes
+        .where(
+          (recipe) => favRecipeIds.contains(recipe.id.toString()),
+        )
         .toList();
     notifyListeners();
   }
