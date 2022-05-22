@@ -49,8 +49,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             style: TextStyle(fontSize: 12, color: ColorStyles.primaryColor),
           ),
           onPressed: () {
-            Provider.of<AppStateManager>(context, listen: false)
-                .completeOnboarding();
+            if (!Provider.of<AppStateManager>(context, listen: false)
+                .isOnboardingComplete) {
+              Provider.of<AppStateManager>(context, listen: false)
+                  .completeOnboarding();
+              return;
+            }
+            Navigator.pop(context);
           },
         )
       ],

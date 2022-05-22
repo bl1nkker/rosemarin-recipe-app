@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:rosemarin_recipe_app/color_styles.dart';
 import 'package:rosemarin_recipe_app/navigation/rosemarin_pages.dart';
 import 'package:rosemarin_recipe_app/screens/ml_screen.dart';
+import 'package:rosemarin_recipe_app/screens/onboarding_screen.dart';
 import 'package:rosemarin_recipe_app/screens/recipe_screen.dart';
 import 'package:rosemarin_recipe_app/screens/saved_recipes_screen.dart';
 import 'package:rosemarin_recipe_app/state/app_state_manager.dart';
@@ -71,7 +72,13 @@ class _HomeState extends State<Home> {
                   color: ColorStyles.accentColor,
                 ),
                 onPressed: () {
-                  appStateManager.repeatOnboarding();
+                  // appStateManager.repeatOnboarding();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const OnboardingScreen(),
+                    ),
+                  );
                 },
               ),
             ],
