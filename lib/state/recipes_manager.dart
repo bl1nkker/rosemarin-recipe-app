@@ -19,6 +19,7 @@ class RecipesManager extends ChangeNotifier {
   List<RecipeModel> _healthyRecipes = [];
   List<RecipeModel> _foundRecipes = [];
   List<RecipeModel> _favoriteRecipes = [];
+  final List<RecipeModel> _cookedRecipes = [];
   List<ProductModel> _products = [];
   List<IngredientModel> _ingredients = [];
   List<ProductModel> _selectedProducts = [];
@@ -30,6 +31,7 @@ class RecipesManager extends ChangeNotifier {
   List<RecipeModel> get recipes => _recipes;
   List<RecipeModel> get randomRecipes => _randomRecipes;
   List<RecipeModel> get favoriteRecipes => _favoriteRecipes;
+  List<RecipeModel> get cookedRecipes => _cookedRecipes;
 
   List<RecipeModel> get healthyRecipes => _healthyRecipes;
   List<RecipeModel> get foundRecipes => _foundRecipes;
@@ -129,6 +131,14 @@ class RecipesManager extends ChangeNotifier {
           (recipe) => favRecipeIds.contains(recipe.id.toString()),
         )
         .toList();
+    notifyListeners();
+  }
+
+  void saveCookedRecipe(RecipeModel recipe) async {
+    if (!_cookedRecipes.contains(recipe)) {
+      _cookedRecipes.add(recipe);
+    }
+
     notifyListeners();
   }
 }

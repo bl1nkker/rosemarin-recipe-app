@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rosemarin_recipe_app/color_styles.dart';
 import 'package:rosemarin_recipe_app/models/product_model.dart';
-import 'package:rosemarin_recipe_app/models/recipe_model.dart';
 import 'package:rosemarin_recipe_app/state/recipes_manager.dart';
 import 'package:collection/collection.dart';
 
@@ -34,30 +33,6 @@ class _MLScreenState extends State<MLScreen> {
   @override
   void initState() {
     super.initState();
-    final List<RecipeModel> recipes =
-        Provider.of<RecipesManager>(context, listen: false).favoriteRecipes;
-    for (var recipe in recipes) {
-      final List<ProductModel?> usedProducts = recipe.ingredients
-          .map((ingredient) =>
-              Provider.of<RecipesManager>(context, listen: false)
-                  .products
-                  .firstWhereOrNull(
-                      (product) => ingredient.name.contains(product.title)))
-          .toList();
-      setState(() {
-        currentFats =
-            usedProducts.fold(0, (sum, product) => sum + (product?.fats ?? 0));
-        currentCarbs =
-            usedProducts.fold(0, (sum, product) => sum + (product?.carbs ?? 0));
-        currentProteins = usedProducts.fold(
-            0, (sum, product) => sum + (product?.proteins ?? 0));
-        // totalCalories = usedProducts.fold(
-        //     0, (sum, product) => sum + (product?.calories ?? 0));
-      });
-    }
-    print('Current fats: $currentFats');
-    print('Current proteins: $currentProteins');
-    print('Current carbs: $currentCarbs');
   }
 
   Widget buildNutrientIndicator(
@@ -171,44 +146,62 @@ class _MLScreenState extends State<MLScreen> {
   @override
   Widget build(BuildContext context) {
     return Consumer<RecipesManager>(
-        builder: ((BuildContext context, RecipesManager recipesManager,
-                child) =>
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  const Text(
-                    'Your Daily Nutrients',
-                    style: TextStyle(
-                        fontSize: 36,
-                        color: ColorStyles.secondaryColor,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  buildDietContainer(
-                      label: 'Vegetarian Diet',
-                      averageCarbsPerDay: averageCarbsPerDayVegetarian,
-                      averageFatsPerDay: averageFatsPerDayVegetarian,
-                      averageProteinsPerDay: averageProteinsPerDayVegetarian,
-                      dietInfo:
-                          'Servings of protein foods such as meat and seafood are not included in the vegetarian plan. Rather, someone following a 2000-calorie-per-day vegetarian diet should try to consume 3.5-ounce equivalents of protein foods, including legumes, soy products, eggs, nuts, and seeds'),
-                  buildDietContainer(
-                      label: 'Mediterranean-Style Diet',
-                      averageCarbsPerDay: averageCarbsPerDayMediterranian,
-                      averageFatsPerDay: averageFatsPerDayMediterranian,
-                      averageProteinsPerDay: averageProteinsPerDayMediterranian,
-                      dietInfo:
-                          'Mediterranean-style diet contains more fruits and seafood and less dairy than the Healthy U.S.-style Pattern.'),
-                  buildDietContainer(
-                      label: '40-30-30 Diet',
-                      averageCarbsPerDay: averageCarbsPerDayFourtyThirty,
-                      averageFatsPerDay: averageFatsPerDayFourtyThirty,
-                      averageProteinsPerDay: averageProteinsPerDayFourtyThirty,
-                      dietInfo:
-                          'A 40-30-30 diet may be helpful for those who want to gain muscle mass, but may not be appropriate for those with liver or kidney problems or when training for endurance exercise.'),
-                ],
-              ),
-            )));
+        builder: ((BuildContext context, RecipesManager recipesManager, child) {
+      List<ProductModel?> usedProducts = [];
+      for (var recipe in recipesManager.cookedRecipes) {
+        usedProducts.addAll(recipe.ingredients
+            .map((ingredient) =>
+                Provider.of<RecipesManager>(context, listen: false)
+                    .products
+                    .firstWhereOrNull(
+                        (product) => ingredient.name.contains(product.title)))
+            .toList());
+      }
+      currentFats =
+          usedProducts.fold(0, (sum, product) => sum + (product?.fats ?? 0));
+      currentCarbs =
+          usedProducts.fold(0, (sum, product) => sum + (product?.carbs ?? 0));
+      currentProteins = usedProducts.fold(
+          0, (sum, product) => sum + (product?.proteins ?? 0));
+      // totalCalories = usedProducts.fold(
+      //     0, (sum, product) => sum + (product?.calories ?? 0));
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            const Text(
+              'Your Daily Nutrients',
+              style: TextStyle(
+                  fontSize: 36,
+                  color: ColorStyles.secondaryColor,
+                  fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            buildDietContainer(
+                label: 'Vegetarian Diet',
+                averageCarbsPerDay: averageCarbsPerDayVegetarian,
+                averageFatsPerDay: averageFatsPerDayVegetarian,
+                averageProteinsPerDay: averageProteinsPerDayVegetarian,
+                dietInfo:
+                    'Servings of protein foods such as meat and seafood are not included in the vegetarian plan. Rather, someone following a 2000-calorie-per-day vegetarian diet should try to consume 3.5-ounce equivalents of protein foods, including legumes, soy products, eggs, nuts, and seeds'),
+            buildDietContainer(
+                label: 'Mediterranean-Style Diet',
+                averageCarbsPerDay: averageCarbsPerDayMediterranian,
+                averageFatsPerDay: averageFatsPerDayMediterranian,
+                averageProteinsPerDay: averageProteinsPerDayMediterranian,
+                dietInfo:
+                    'Mediterranean-style diet contains more fruits and seafood and less dairy than the Healthy U.S.-style Pattern.'),
+            buildDietContainer(
+                label: '40-30-30 Diet',
+                averageCarbsPerDay: averageCarbsPerDayFourtyThirty,
+                averageFatsPerDay: averageFatsPerDayFourtyThirty,
+                averageProteinsPerDay: averageProteinsPerDayFourtyThirty,
+                dietInfo:
+                    'A 40-30-30 diet may be helpful for those who want to gain muscle mass, but may not be appropriate for those with liver or kidney problems or when training for endurance exercise.'),
+          ],
+        ),
+      );
+    }));
   }
 }

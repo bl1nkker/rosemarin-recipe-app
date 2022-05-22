@@ -67,6 +67,35 @@ class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
           }),
         ],
       ),
+      floatingActionButton: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: const BoxDecoration(
+          color: ColorStyles.secondaryColor,
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
+        width: MediaQuery.of(context).size.width * 0.9,
+        child: GestureDetector(
+          child: const Text(
+            'I will cook this!',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: ColorStyles.accentColor),
+          ),
+          onTap: () {
+            Provider.of<RecipesManager>(context, listen: false)
+                .saveCookedRecipe(widget.recipe);
+            ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(
+              const SnackBar(
+                content: Text(
+                  'You will!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: ColorStyles.accentColor),
+                ),
+                backgroundColor: ColorStyles.secondaryColor,
+              ),
+            );
+          },
+        ),
+      ),
       body: Hero(
         transitionOnUserGestures: true,
         tag: widget.recipe.id,
