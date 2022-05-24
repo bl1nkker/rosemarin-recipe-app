@@ -28,24 +28,26 @@ class _SimpleRecipeCardState extends State<SimpleRecipeCard> {
         },
         child: Container(
           width: 120,
+          height: 200,
           margin: const EdgeInsets.only(left: 10.0),
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
+            color: ColorStyles.primaryColor,
+            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+            image: DecorationImage(
+              image: NetworkImage(widget.recipe.image),
+              fit: BoxFit.cover,
+            ),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey,
+                color: Colors.black.withOpacity(0.1),
                 blurRadius: 5.0,
+                spreadRadius: 1.0,
               ),
             ],
           ),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(10.0),
-                  topRight: Radius.circular(10.0),
-                ),
-                child: Image(image: NetworkImage(widget.recipe.image)),
-              ),
               buildCardInfo(widget.recipe),
             ],
           ),
@@ -78,11 +80,10 @@ class _SimpleRecipeCardState extends State<SimpleRecipeCard> {
           10.0,
         ),
         width: 200,
+        height: 100,
         decoration: const BoxDecoration(
           color: ColorStyles.primaryColor,
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(5.0),
-            topRight: Radius.circular(5.0),
             bottomLeft: Radius.circular(10.0),
             bottomRight: Radius.circular(10.0),
           ),
@@ -91,7 +92,7 @@ class _SimpleRecipeCardState extends State<SimpleRecipeCard> {
           Text(
             widget.recipe.title,
             style: const TextStyle(
-              fontSize: 12,
+              fontSize: 10,
               fontWeight: FontWeight.bold,
             ),
           ),
