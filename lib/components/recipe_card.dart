@@ -28,24 +28,43 @@ class _RecipeCardState extends State<RecipeCard> {
         },
         child: Container(
           width: 200,
+          height: 250,
           margin: const EdgeInsets.only(left: 10.0),
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
+            color: ColorStyles.primaryColor,
+            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+            image: DecorationImage(
+              image: NetworkImage(widget.recipe.image),
+              fit: BoxFit.cover,
+            ),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey,
+                color: Colors.black.withOpacity(0.1),
                 blurRadius: 5.0,
+                spreadRadius: 1.0,
               ),
             ],
           ),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(10.0),
-                  topRight: Radius.circular(10.0),
-                ),
-                child: Image(image: NetworkImage(widget.recipe.image)),
-              ),
+              // ClipRRect(
+              //   borderRadius: const BorderRadius.only(
+              //     topLeft: Radius.circular(10.0),
+              //     topRight: Radius.circular(10.0),
+              //   ),
+              //   child: SizedBox(
+              //     height: 150,
+              //     width: 150,
+              //     child: Image(
+              //       image: NetworkImage(
+              //         widget.recipe.image,
+              //       ),
+              //       // fit: BoxFit.fitWidth,
+              //     ),
+              //   ),
+              // ),
               buildCardInfo(widget.recipe),
             ],
           ),
@@ -80,8 +99,6 @@ class _RecipeCardState extends State<RecipeCard> {
       decoration: const BoxDecoration(
         color: ColorStyles.primaryColor,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(5.0),
-          topRight: Radius.circular(5.0),
           bottomLeft: Radius.circular(10.0),
           bottomRight: Radius.circular(10.0),
         ),
@@ -95,10 +112,6 @@ class _RecipeCardState extends State<RecipeCard> {
           ),
         ),
         const SizedBox(height: 10),
-        // buildRecipeInfo(
-        //     '${recipe.getCalories().toString()} calories', Icons.foggy),
-        // SizedBox(height: 5),
-        // buildRecipeInfo('25 min', Icons.timer),
       ]),
     );
   }

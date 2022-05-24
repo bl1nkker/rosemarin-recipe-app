@@ -39,7 +39,7 @@ class _SavedRecipesScreenState extends State<SavedRecipesScreen> {
     return Consumer<RecipesManager>(builder: (context, recipesManager, child) {
       return ListView(children: [
         const Text(
-          'Favourite Recipes',
+          'Favorite Recipes',
           style: TextStyle(
               fontSize: 48,
               color: ColorStyles.secondaryColor,

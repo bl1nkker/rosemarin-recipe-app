@@ -46,7 +46,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         MaterialButton(
           child: const Text(
             'Пропустить',
-            style: TextStyle(fontSize: 12, color: ColorStyles.primaryColor),
+            style: TextStyle(fontSize: 12, color: ColorStyles.accentColor),
           ),
           onPressed: () {
             if (!Provider.of<AppStateManager>(context, listen: false)
