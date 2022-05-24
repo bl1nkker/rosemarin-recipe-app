@@ -173,7 +173,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget buildIndicator() {
     return SmoothPageIndicator(
       controller: controller,
-      count: 8,
+      count: 9,
       effect: const WormEffect(
           activeDotColor: ColorStyles.accentColor,
           dotColor: ColorStyles.primaryColor),
