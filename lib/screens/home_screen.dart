@@ -125,7 +125,7 @@ class _HomeState extends State<Home> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.computer,
+                  Icons.monitor_heart_outlined,
                   size: 32,
                 ),
                 label: '',

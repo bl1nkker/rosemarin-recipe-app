@@ -74,10 +74,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             'На главном экране вы можете увидеть список всех рецептом, здоровых рецептов и простых рецептов. Выбирайте на свой вкус!'),
         onboardPageView(const AssetImage('assets/onboarding/onboarding_3.png'),
             'При переходе на страницу рецепта вы можете просмотреть информацию о его ингредиентах и общей пищевой ценности'),
-        onboardPageView(const AssetImage('assets/onboarding/onboarding_4.png'),
-            'А теперь к главному... выберите продукты которые есть в вашем холодильнике и сможете увидеть рецепты, которые вам подходят!'),
-        onboardPageView(const AssetImage('assets/onboarding/onboarding_5.png'),
-            'Можно выбрать несколько продуктов, тем самым расширив список рецептов!'),
         Padding(
           padding: const EdgeInsets.all(40),
           child: Column(
@@ -98,6 +94,50 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ],
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.all(40),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: const BoxDecoration(
+                        color: ColorStyles.primaryColor,
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: const Text(
+                        'I will cook this!',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: ColorStyles.secondaryColor),
+                      ),
+                    ),
+                    const Icon(Icons.arrow_drop_down,
+                        size: 64, color: ColorStyles.primaryColor),
+                    const Icon(Icons.monitor_heart_sharp,
+                        size: 100, color: ColorStyles.accentColor),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'Помечайте приготовленные рецепты и обновляйте свой ежедневный статус во вкладке "Мой статус"!',
+                style: TextStyle(fontSize: 20, color: ColorStyles.primaryColor),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 16),
+            ],
+          ),
+        ),
+        onboardPageView(const AssetImage('assets/onboarding/onboarding_4.png'),
+            'А теперь к главному... выберите продукты которые есть в вашем холодильнике и сможете увидеть рецепты, которые вам подходят!'),
+        onboardPageView(const AssetImage('assets/onboarding/onboarding_5.png'),
+            'Можно выбрать несколько продуктов, тем самым расширив список рецептов!'),
         onboardPageView(const AssetImage('assets/onboarding/onboarding_6.png'),
             'Следите за обновлениями нашего приложения на сайте!'),
       ],
